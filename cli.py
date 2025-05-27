@@ -17,13 +17,14 @@ def init_db():
 def seed_db():
     session = SessionLocal()
 
-    user1 = User(username='alice', email='alice@example.com', password_hash='hashed_pwd', created_at=datetime.utcnow())
-    user2 = User(username='bob', email='bob@example.com', password_hash='hashed_pwd', created_at=datetime.utcnow())
+    
+    user1 = User(username='alice', email='alice@example.com', password_hash='hashed_pwd', created_at=datetime.now())
+    user2 = User(username='bob', email='bob@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     session.add_all([user1, user2])
     session.commit()
 
-    note1 = Note(user_id=user1.id, title='Note 1', content='Content of Note 1', created_at=datetime.utcnow(), updated_at=datetime.utcnow())
-    note2 = Note(user_id=user2.id, title='Note 2', content='Content of Note 2', created_at=datetime.utcnow(), updated_at=datetime.utcnow())
+    note1 = Note(user_id=user1.id, title='Note 1', content='Content of Note 1', created_at=datetime.now())
+    note2 = Note(user_id=user2.id, title='Note 2', content='Content of Note 2', created_at=datetime.now())
     session.add_all([note1, note2])
     session.commit()
 
@@ -37,8 +38,8 @@ def seed_db():
     session.add_all([note_tag1, note_tag2])
     session.commit()
 
-    complaint1 = Complaint(user_id=user1.id, content='Complaint from Alice', created_at=datetime.utcnow())
-    complaint2 = Complaint(user_id=user2.id, content='Complaint from Bob', created_at=datetime.utcnow())
+    complaint1 = Complaint(user_id=user1.id, content='Complaint from Alice', created_at=datetime.now())
+    complaint2 = Complaint(user_id=user2.id, content='Complaint from Bob', created_at=datetime.now())
     session.add_all([complaint1, complaint2])
     session.commit()
 
@@ -88,3 +89,6 @@ def list_data(table):
         click.echo("Invalid table.")
 
     session.close()
+
+if __name__ == '__main__':
+    cli()
