@@ -36,4 +36,6 @@ class Tag(Base):
     tag_name = Column(String)
 
     notes = relationship('Note', secondary='note_tags', back_populates='tags')
-    
+
+
+class NoteTag(Base):
