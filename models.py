@@ -51,7 +51,6 @@ class Complaint(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
-
     user = relationship('User', back_populates='complaints')
 
 
