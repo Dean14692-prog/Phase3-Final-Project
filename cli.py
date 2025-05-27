@@ -149,7 +149,7 @@ def update_data():
         session.add(new_complaint)
 
     else:
-        print("Invalid table name")
+        print("\nInvalid table name")
         session.close()
         return
 
