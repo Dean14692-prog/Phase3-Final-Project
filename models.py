@@ -50,4 +50,6 @@ class Complaint(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
 
