@@ -118,16 +118,18 @@ def list_data(table):
         session.close()
 
 
-@cli.command('add_to_db')
+@cli.command('add-to-db')
 def update_data():
     session = SessionLocal()
-    table = input("Enter table name (users, notes, tags, complaints): ").strip()
-    id = int(input("Enter the ID of the record you want to update: "))
-    field = input("Enter the field you want to update: ").strip()
-    new_value = input("Enter the new value: ")
+    table = input("Enter table name (users, notes, tags, complaints): ").strip().lower()
 
     if table == 'users':
-        model = User
+        username = input("Enter username: ")
+        email = input("Enter email: ")
+        password_hash = input("Enter password (hashed): ")
+        new_user = User(username=username, email=email, password_hash=password_hash)
+        session.add(new_user)
+        
     elif table == 'notes':
         model = Note
     elif table == 'tags':
