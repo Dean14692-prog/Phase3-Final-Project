@@ -28,3 +28,9 @@ class Note(Base):
 
     user = relationship('User', back_populates='notes')
     tags = relationship('Tag', secondary='note_tags', back_populates='notes')
+
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key = True, autoincrement = True)
+    tag_name = Column(String)
