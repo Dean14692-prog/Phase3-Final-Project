@@ -9,7 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String)
     email = Column(String)
-    password_hash = Column(String)
+    password = Column(String)
     created_at = Column(DateTime, default=datetime.now())
 
     notes = relationship('Note', back_populates='user')
