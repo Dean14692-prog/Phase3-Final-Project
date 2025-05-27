@@ -11,9 +11,9 @@ def cli():
 def initialize_db():
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    click.secho("Database initialized.",fg="green", bold=True)
+    click.secho("\nDatabase initialized successfully!",fg="blue", bold=True)
 
-@cli.command('update-db')
+@cli.command('seed-db')
 def update_db():
     session = SessionLocal()
 
@@ -51,7 +51,7 @@ def update_db():
     session.commit()
 
     session.close()
-    click.echo("Database seeded with sample data.")
+    click.secho("\nDatabase seeded with sample data!", fg="blue", bold=True)
 
 @cli.command('list-data')
 @click.option('--table', 
