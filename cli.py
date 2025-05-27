@@ -131,7 +131,12 @@ def update_data():
         session.add(new_user)
 
     elif table == 'notes':
-        model = Note
+        title = input("Enter title: ")
+        content = input("Enter content: ")
+        user_id = int(input("Enter user ID: "))
+        new_note = Note(title=title, content=content, user_id=user_id)
+        session.add(new_note)
+        
     elif table == 'tags':
         model = Tag
     elif table == 'complaints':
