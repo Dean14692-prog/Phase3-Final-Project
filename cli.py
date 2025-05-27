@@ -53,19 +53,54 @@ def list_data(table):
         if table == 'users':
             users = session.query(User).all()
             if users:
-                # Print a header
                 click.secho(f"{'ID':<5} {'Username':<15} {'Email':<25} {'Created At':<25}", fg='cyan', bold=True)
                 click.secho('-' * 80, fg='cyan')
-                # Print user rows
                 for user in users:
                     click.echo(f"{user.id:<5} {user.username:<15} {user.email:<25} {str(user.created_at):<25}")
-                # Summary
                 click.secho('-' * 80, fg='cyan')
                 click.secho(f"Total users: {len(users)}", fg='green', bold=True)
             else:
                 click.secho("No users found.", fg='yellow')
 
-        # (You can similarly improve 'notes', 'tags', etc.)
+        elif table == 'notes':
+            # Make sure Note is imported correctly
+            try:
+                notes = session.query(Note).all()
+                if notes:
+                    click.secho(f"{'ID':<5} {'Title':<20} {'UserID':<8} {'Created At':<25}", fg='cyan', bold=True)
+                    click.secho('-' * 80, fg='cyan')
+                    for note in notes:
+                        click.echo(f"{note.id:<5} {note.title:<20} {note.user_id:<8} {str(note.created_at):<25}")
+                    click.secho('-' * 80, fg='cyan')
+                    click.secho(f"Total notes: {len(notes)}", fg='green', bold=True)
+                else:
+                    click.secho("No notes found.", fg='yellow')
+            except Exception as e:
+                click.secho(f"Error accessing 'notes': {e}", fg='red')
+
+        elif table == 'tags':
+            # Similarly ensure Tag is imported and used
+            tags = session.query(Tag).all()
+            for tag in tags:
+                click.echo(f"ID: {tag.id}, Tag: {tag.tag_name}")
+
+        elif table == 'complaints':
+            complaints = session.query(Complaint).all()
+            for c in complaints:
+                click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
+
+        elif table == 'detailed_notes':
+            notes = session.query(Note).all()
+            for note in notes:
+                user = session.query(User).filter(User.id == note.user_id).first()
+                tags = session.query(Tag).join(NoteTag, Tag.id == NoteTag.tag_id).filter(NoteTag.note_id == note.id).all()
+                tag_names = ', '.join([tag.tag_name for tag in tags]) if tags else 'No Tags'
+                click.echo(f"\nNote ID: {note.id}")
+                click.echo(f"Title: {note.title}")
+                click.echo(f"Content: {note.content}")
+                click.echo(f"User: {user.username} ({user.email})")
+                click.echo(f"Tags: {tag_names}")
+                click.echo(f"Created: {note.created_at}, Updated: {note.updated_at}")
 
         else:
             click.secho("Invalid table selected.", fg='red')
@@ -73,9 +108,9 @@ def list_data(table):
     except Exception as e:
         click.secho(f"An error occurred: {e}", fg='red')
         session.rollback()
-
     finally:
         session.close()
+
 
 
 if __name__ == '__main__':
