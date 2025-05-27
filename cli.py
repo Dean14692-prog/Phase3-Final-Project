@@ -7,16 +7,16 @@ from datetime import datetime
 def cli():
     pass
 
-@cli.command('init-db')
+@cli.command('initialize')
 def init_db():
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     click.echo("Database initialized.")
 
-@cli.command('seed-db')
+@cli.command('update-db')
 def seed_db():
     session = SessionLocal()
-    
+
     user1 = User(username='alice', email='alice@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     user2 = User(username='bob', email='bob@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     session.add_all([user1, user2])
@@ -49,45 +49,65 @@ def seed_db():
 @click.option('--table', type=click.Choice(['users', 'notes', 'tags', 'complaints', 'detailed_notes']), prompt='Which table to display?')
 def list_data(table):
     session = SessionLocal()
+    try:
+        if table == 'users':
+            users = session.query(User).all()
+            if users:
+                for user in users:
+                    click.echo(f"ID: {user.id}, Username: {user.username}, Email: {user.email}, Created: {user.created_at}")
+            else:
+                click.echo("No users found.")
 
-    if table == 'users':
-        users = session.query(User).all()
-        for user in users:
-            click.echo(f"ID: {user.id}, Username: {user.username}, Email: {user.email}, Created: {user.created_at}")
+        elif table == 'notes':
+            notes = session.query(Note).all()
+            if notes:
+                for note in notes:
+                    click.echo(f"ID: {note.id}, Title: {note.title}, UserID: {note.user_id}, Created: {note.created_at}")
+            else:
+                click.echo("No notes found.")
 
-    elif table == 'notes':
-        notes = session.query(Note).all()
-        for note in notes:
-            click.echo(f"ID: {note.id}, Title: {note.title}, UserID: {note.user_id}, Created: {note.created_at}")
+        elif table == 'tags':
+            tags = session.query(Tag).all()
+            if tags:
+                for tag in tags:
+                    click.echo(f"ID: {tag.id}, Tag: {tag.tag_name}")
+            else:
+                click.echo("No tags found.")
 
-    elif table == 'tags':
-        tags = session.query(Tag).all()
-        for tag in tags:
-            click.echo(f"ID: {tag.id}, Tag: {tag.tag_name}")
+        elif table == 'complaints':
+            complaints = session.query(Complaint).all()
+            if complaints:
+                for c in complaints:
+                    click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
+            else:
+                click.echo("No complaints found.")
 
-    elif table == 'complaints':
-        complaints = session.query(Complaint).all()
-        for c in complaints:
-            click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
+        elif table == 'detailed_notes':
+            notes = session.query(Note).all()
+            if notes:
+                for note in notes:
+                    user = session.query(User).filter_by(id=note.user_id).first()
+                    tags = session.query(Tag).join(NoteTag, Tag.id == NoteTag.tag_id).filter(NoteTag.note_id == note.id).all()
+                    tag_names = ', '.join([tag.tag_name for tag in tags]) if tags else 'No Tags'
+                    click.echo(f"\nNote ID: {note.id}")
+                    click.echo(f"Title: {note.title}")
+                    click.echo(f"Content: {note.content}")
+                    click.echo(f"User: {user.username} ({user.email})" if user else "User: Unknown")
+                    click.echo(f"Tags: {tag_names}")
+                    click.echo(f"Created: {note.created_at}, Updated: {note.updated_at}")
+            else:
+                click.echo("No detailed notes found.")
 
-    elif table == 'detailed_notes':
-        notes = session.query(Note).all()
-        for note in notes:
-            user = session.query(User).filter(User.id == note.user_id).first()
-            tags = session.query(Tag).join(NoteTag, Tag.id == NoteTag.tag_id).filter(NoteTag.note_id == note.id).all()
-            tag_names = ', '.join([tag.tag_name for tag in tags]) if tags else 'No Tags'
+        else:
+            click.echo("Invalid table selected.")
 
-            click.echo(f"\nNote ID: {note.id}")
-            click.echo(f"Title: {note.title}")
-            click.echo(f"Content: {note.content}")
-            click.echo(f"User: {user.username} ({user.email})")
-            click.echo(f"Tags: {tag_names}")
-            click.echo(f"Created: {note.created_at}, Updated: {note.updated_at}")
+    except Exception as e:
+        click.echo(f"An error occurred: {e}")
+        session.rollback()
 
-    else:
-        click.echo("Invalid table.")
+    finally:
+        session.close()
 
-    session.close()
 
 if __name__ == '__main__':
     cli()
