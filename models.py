@@ -39,3 +39,7 @@ class Tag(Base):
 
 
 class NoteTag(Base):
+    __tablename__ = 'note_tags'
+
+    note_id = Column(Integer, ForeignKey('notes.id'), primary_key= True)
+    
