@@ -17,8 +17,8 @@ def initialize_db():
 def update_db():
     session = SessionLocal()
 
-    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password_hash='alice_123', created_at=datetime.now())
-    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password_hash='hashed_pwd', created_at=datetime.now())
+    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password_hash='martin_123', created_at=datetime.now())
+    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password_hash='dennis_123', created_at=datetime.now())
     session.add_all([user1, user2])
     session.commit()
 
@@ -53,7 +53,9 @@ def update_db():
     click.echo("Database seeded with sample data.")
 
 @cli.command('list-data')
-@click.option('--table', type=click.Choice(['users', 'notes', 'tags', 'complaints', 'detailed_notes']), prompt='Which table to display?')
+@click.option('--table', 
+              type=click.Choice(['users', 'notes', 'tags', 'complaints', 'detailed_notes']), 
+              prompt='Which table to display?')
 def list_data(table):
     session = SessionLocal()
     try:

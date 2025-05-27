@@ -22,7 +22,6 @@ class Note(Base):
     title = Column(String)
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.now())
-    updated_at = Column(DateTime, default=datetime.now())
 
     user = relationship('User', back_populates='notes')
     tags = relationship('Tag', secondary='note_tags', back_populates='notes')
