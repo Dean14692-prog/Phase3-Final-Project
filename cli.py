@@ -118,6 +118,10 @@ def list_data(table):
         session.close()
 
 
+@cli.command('update-data')
+def update_data():
+    session = SessionLocal()
+
 
 
 if __name__ == '__main__':
