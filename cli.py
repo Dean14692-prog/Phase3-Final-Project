@@ -17,8 +17,8 @@ def initialize_db():
 def update_db():
     session = SessionLocal()
 
-    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password_hash='martin_123', created_at=datetime.now())
-    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password_hash='dennis_123', created_at=datetime.now())
+    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password='martin_123', created_at=datetime.now())
+    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password='dennis_123', created_at=datetime.now())
     session.add_all([user1, user2])
     session.commit()
 
@@ -126,7 +126,7 @@ def update_data():
     if table == 'users':
         username = input("Enter username: ")
         email = input("Enter email: ")
-        password = input("Enter password (hashed): ")
+        password = input("Enter password: ")
         new_user = User(username=username, email=email, password=password)
         session.add(new_user)
 
