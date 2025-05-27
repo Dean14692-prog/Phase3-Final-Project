@@ -136,11 +136,17 @@ def update_data():
         user_id = int(input("Enter user ID: "))
         new_note = Note(title=title, content=content, user_id=user_id)
         session.add(new_note)
-        
+
     elif table == 'tags':
-        model = Tag
+        tag_name = input("Enter tag name: ")
+        new_tag = Tag(tag_name=tag_name)
+        session.add(new_tag)
+
     elif table == 'complaints':
-        model = Complaint
+        user_id = int(input("Enter user ID: "))
+        content = input("Enter complaint content: ")
+        new_complaint = Complaint(user_id=user_id, content=content)
+        session.add(new_complaint)
     else:
         print("Invalid table name")
         session.close()
