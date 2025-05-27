@@ -34,6 +34,7 @@ def update_db():
     tag2 = Tag(tag_name='personal')
     tag3 = Tag(tag_name='work')
     tag4 = Tag(tag_name='family')
+    tag5 = Tag(tag_name='testing')
     session.add_all([tag1, tag2, tag3, tag4])
     session.commit()
 
