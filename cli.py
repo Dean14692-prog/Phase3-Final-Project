@@ -147,22 +147,16 @@ def update_data():
         content = input("Enter complaint content: ")
         new_complaint = Complaint(user_id=user_id, content=content)
         session.add(new_complaint)
+
     else:
         print("Invalid table name")
         session.close()
         return
 
-    record = session.query(model).filter(model.id == id).first()
-
-    if record:
-        if hasattr(record, field):
-            setattr(record, field, new_value)
-            session.commit()
-            print(f"Record updated: {field} is now '{new_value}'")
-        else:
-            print(f"Field '{field}' does not exist in {table}")
-    else:
-        print("Record not found")
+    session.commit()
+    print(f"New entry added to {table} table!")
+    session.close()
+  
 
     session.close()
 
