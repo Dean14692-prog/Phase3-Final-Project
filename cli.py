@@ -118,6 +118,40 @@ def list_data(table):
         session.close()
 
 
+@cli.command('update-data')
+@click.option('--table', prompt='Which table to update? (users, notes, tags, complaints)')
+@click.option('--id', prompt='Enter the ID of the record to update', type=int)
+@click.option('--field', prompt='Which field to update?')
+@click.option('--value', prompt='New value for the field')
+def update_data(table, id, field, value):
+    session = SessionLocal()
+    model = None
+
+    # Select the correct table model
+    if table == 'users':
+        model = User
+    elif table == 'notes':
+        model = Note
+    elif table == 'tags':
+        model = Tag
+    elif table == 'complaints':
+        model = Complaint
+    else:
+        click.echo("Invalid table name")
+        session.close()
+        return
+
+    
+    record = session.query(model).filter(model.id == id).first()
+    if record:
+        setattr(record, field, value)
+        session.commit()
+        click.secho(f"{table} record ID {id} updated: set {field} = {value}", fg='green')
+    else:
+        click.secho(f"Record with ID {id} not found in {table}", fg='red')
+
+    session.close()
+
 
 if __name__ == '__main__':
     cli()
