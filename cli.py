@@ -11,7 +11,7 @@ def cli():
 def initialize_db():
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    click.echo("Database initialized.")
+    click.secho("Database initialized.",fg="green", bold=True)
 
 @cli.command('update-db')
 def update_db():
