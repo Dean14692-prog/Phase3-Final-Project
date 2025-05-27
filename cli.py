@@ -17,23 +17,30 @@ def init_db():
 def seed_db():
     session = SessionLocal()
 
-    user1 = User(username='alice', email='alice@example.com', password_hash='hashed_pwd', created_at=datetime.now())
-    user2 = User(username='bob', email='bob@example.com', password_hash='hashed_pwd', created_at=datetime.now())
+    user1 = User(username='alice', email='martin.kioko@example.com', password_hash='alice_123', created_at=datetime.now())
+    user2 = User(username='bob', email='dennis.ngui@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     session.add_all([user1, user2])
     session.commit()
 
-    note1 = Note(user_id=user1.id, title='Note 1', content='Content of Note 1', created_at=datetime.now())
-    note2 = Note(user_id=user2.id, title='Note 2', content='Content of Note 2', created_at=datetime.now())
-    session.add_all([note1, note2])
+    note1 = Note(user_id=user1.id, title='Meeting', content='Site meeting in Mombasa', created_at=datetime.now())
+    note2 = Note(user_id=user2.id, title='Shopping', content='Buy snacks for my baby', created_at=datetime.now())
+    note3 = Note(user_id=user2.id, title='Family', content='Have a coffee date with my wife ', created_at=datetime.now())
+    note4 = Note(user_id=user2.id, title='Gym', content='Go to the gym over the weekend', created_at=datetime.now())
+
+    session.add_all([note1, note2, note3, note4])
     session.commit()
 
     tag1 = Tag(tag_name='urgent')
     tag2 = Tag(tag_name='personal')
-    session.add_all([tag1, tag2])
+    tag3 = Tag(tag_name='work')
+    tag4 = Tag(tag_name='family')
+    session.add_all([tag1, tag2, tag3, tag4])
     session.commit()
 
     note_tag1 = NoteTag(note_id=note1.id, tag_id=tag1.id)
     note_tag2 = NoteTag(note_id=note2.id, tag_id=tag2.id)
+    note_tag3 = NoteTag(note_id=note3.id, tag_id=tag3.id)
+    note_tag4 = NoteTag(note_id=note4.id, tag_id=tag4.id)
     session.add_all([note_tag1, note_tag2])
     session.commit()
 
