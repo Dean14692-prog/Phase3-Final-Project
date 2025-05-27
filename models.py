@@ -21,7 +21,7 @@ class Note(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     title = Column(String)
     content = Column(Text)
-    created_at = Column(DateTime, default=datetime.now())
+    created_at = Column(DateTime)
 
     user = relationship('User', back_populates='notes')
     tags = relationship('Tag', secondary='note_tags', back_populates='notes')
@@ -43,7 +43,7 @@ class Complaint(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
-    created_at = Column(DateTime, default=datetime.now())
+    created_at = Column(DateTime)
     user = relationship('User', back_populates='complaints')
 
 
