@@ -158,7 +158,7 @@ def update_data():
     session.close()
   
 
-    # session.close()
+   
 
 
 
