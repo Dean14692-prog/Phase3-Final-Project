@@ -10,7 +10,7 @@ class User(Base):
     username = Column(String)
     email = Column(String)
     password_hash = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
 
     notes = relationship('Note', back_populates='user')
     complaints = relationship('Complaint', back_populates='user')
@@ -21,8 +21,8 @@ class Note(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     title = Column(String)
     content = Column(Text)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now())
 
     user = relationship('User', back_populates='notes')
     tags = relationship('Tag', secondary='note_tags', back_populates='notes')
@@ -44,7 +44,7 @@ class Complaint(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
     user = relationship('User', back_populates='complaints')
 
 
