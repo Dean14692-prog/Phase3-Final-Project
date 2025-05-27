@@ -118,9 +118,40 @@ def list_data(table):
         session.close()
 
 
-@cli.command('update-data')
+@cli.command('add_to_db')
 def update_data():
     session = SessionLocal()
+    table = input("Enter table name (users, notes, tags, complaints): ").strip()
+    id = int(input("Enter the ID of the record you want to update: "))
+    field = input("Enter the field you want to update: ").strip()
+    new_value = input("Enter the new value: ")
+
+    if table == 'users':
+        model = User
+    elif table == 'notes':
+        model = Note
+    elif table == 'tags':
+        model = Tag
+    elif table == 'complaints':
+        model = Complaint
+    else:
+        print("Invalid table name")
+        session.close()
+        return
+
+    record = session.query(model).filter(model.id == id).first()
+
+    if record:
+        if hasattr(record, field):
+            setattr(record, field, new_value)
+            session.commit()
+            print(f"Record updated: {field} is now '{new_value}'")
+        else:
+            print(f"Field '{field}' does not exist in {table}")
+    else:
+        print("Record not found")
+
+    session.close()
 
 
 
