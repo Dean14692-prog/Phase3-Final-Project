@@ -63,7 +63,6 @@ def list_data(table):
                 click.secho("No users found.", fg='yellow')
 
         elif table == 'notes':
-            # Make sure Note is imported correctly
             try:
                 notes = session.query(Note).all()
                 if notes:
@@ -99,22 +98,7 @@ def list_data(table):
             
             click.secho('-' * 80, fg='cyan')
             click.secho(f"Total complaints: {len(complaints)}", fg='green', bold=True)
- 
 
-        elif table == 'detailed_notes':
-            notes = session.query(Note).all()
-            click.secho('-' * 80, fg='cyan')
-            for note in notes:
-                user = session.query(User).filter(User.id == note.user_id).first()
-                tags = session.query(Tag).join(NoteTag, Tag.id == NoteTag.tag_id).filter(NoteTag.note_id == note.id).all()
-                tag_names = ', '.join([tag.tag_name for tag in tags]) if tags else 'No Tags'
-                click.echo(f"\nNote ID: {note.id}")
-                click.echo(f"Title: {note.title}")
-                click.echo(f"Content: {note.content}")
-                click.echo(f"User: {user.username} ({user.email})")
-                click.echo(f"Tags: {tag_names}")
-                click.echo(f"Created: {note.created_at}, Updated: {note.updated_at}")
-            click.secho('-' * 80, fg='cyan')
         else:
             click.secho("Invalid table selected.", fg='red')
 
