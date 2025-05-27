@@ -126,10 +126,10 @@ def update_data():
     if table == 'users':
         username = input("Enter username: ")
         email = input("Enter email: ")
-        password_hash = input("Enter password (hashed): ")
-        new_user = User(username=username, email=email, password_hash=password_hash)
+        password = input("Enter password (hashed): ")
+        new_user = User(username=username, email=email, password=password)
         session.add(new_user)
-        
+
     elif table == 'notes':
         model = Note
     elif table == 'tags':
