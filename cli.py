@@ -156,11 +156,6 @@ def update_data():
     session.commit()
     print(f"\nNew entry added to {table} table!")
     session.close()
-  
-
-   
-
-
 
 if __name__ == '__main__':
     cli()
