@@ -15,3 +15,16 @@ class User(Base):
     notes = relationship('Note', back_populates='user')
     complaints = relationship('Complaint', back_populates='user')
 
+class Note(Base):
+    __tablename__ = 'notes'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    folder_id = Column(Integer, nullable=True)
+    title = Column(String)
+    content = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship('User', back_populates='notes')
+    tags = relationship('Tag', secondary='note_tags', back_populates='notes')
