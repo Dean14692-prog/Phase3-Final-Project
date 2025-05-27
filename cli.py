@@ -44,8 +44,8 @@ def update_db():
     session.add_all([note_tag1, note_tag2, note_tag3, note_tag4])
     session.commit()
 
-    complaint1 = Complaint(user_id=user1.id, content='Complaint from Alice', created_at=datetime.now())
-    complaint2 = Complaint(user_id=user2.id, content='Complaint from Bob', created_at=datetime.now())
+    complaint1 = Complaint(user_id=user1.id, content='Complaint from Martin Kioko', created_at=datetime.now())
+    complaint2 = Complaint(user_id=user2.id, content='Complaint from Dennis Ngui', created_at=datetime.now())
     session.add_all([complaint1, complaint2])
     session.commit()
 
