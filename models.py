@@ -19,7 +19,6 @@ class Note(Base):
     __tablename__ = 'notes'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
-    folder_id = Column(Integer, nullable=True)
     title = Column(String)
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)

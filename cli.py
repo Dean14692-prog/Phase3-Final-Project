@@ -16,7 +16,6 @@ def init_db():
 @cli.command('seed-db')
 def seed_db():
     session = SessionLocal()
-
     
     user1 = User(username='alice', email='alice@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     user2 = User(username='bob', email='bob@example.com', password_hash='hashed_pwd', created_at=datetime.now())
