@@ -31,10 +31,8 @@ class Note(Base):
 
 class Tag(Base):
     __tablename__ = 'tags'
-
     id = Column(Integer, primary_key = True, autoincrement = True)
     tag_name = Column(String)
-
     notes = relationship('Note', secondary='note_tags', back_populates='tags')
 
 
