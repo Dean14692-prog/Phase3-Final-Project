@@ -90,7 +90,6 @@ def list_data(table):
         elif table == 'complaints':
             complaints = session.query(Complaint).all()
             
-            # Print header with clear column titles and alignment
             click.secho(f"{'ID':<5} {'User ID':<10} {'Complaint':<60}", fg='cyan', bold=True)
             click.secho('-' * 80, fg='cyan')
             
