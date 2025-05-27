@@ -41,7 +41,7 @@ def seed_db():
     note_tag2 = NoteTag(note_id=note2.id, tag_id=tag2.id)
     note_tag3 = NoteTag(note_id=note3.id, tag_id=tag3.id)
     note_tag4 = NoteTag(note_id=note4.id, tag_id=tag4.id)
-    session.add_all([note_tag1, note_tag2])
+    session.add_all([note_tag1, note_tag2, note_tag3, note_tag4])
     session.commit()
 
     complaint1 = Complaint(user_id=user1.id, content='Complaint from Alice', created_at=datetime.now())
