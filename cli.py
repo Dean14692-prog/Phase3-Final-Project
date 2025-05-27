@@ -24,7 +24,7 @@ def seed_db():
 
     note1 = Note(user_id=user1.id, title='Meeting', content='Site meeting in Mombasa', created_at=datetime.now())
     note2 = Note(user_id=user2.id, title='Shopping', content='Buy snacks for my baby', created_at=datetime.now())
-    note3 = Note(user_id=user2.id, title='Family', content='Have a coffee date with my wife ', created_at=datetime.now())
+    note3 = Note(user_id=user2.id, title='Family', content='Have a coffee date with my wife', created_at=datetime.now())
     note4 = Note(user_id=user2.id, title='Gym', content='Go to the gym over the weekend', created_at=datetime.now())
 
     session.add_all([note1, note2, note3, note4])
