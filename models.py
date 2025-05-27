@@ -40,13 +40,11 @@ class Tag(Base):
 
 class NoteTag(Base):
     __tablename__ = 'note_tags'
-
     note_id = Column(Integer, ForeignKey('notes.id'), primary_key= True)
     tag_id = Column(Integer, ForeignKey('tags.id'), primary_key=True)
 
 class Complaint(Base):
     __tablename__ = 'complaint'
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
