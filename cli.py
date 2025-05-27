@@ -79,18 +79,22 @@ def list_data(table):
                 click.secho(f"Error accessing 'notes': {e}", fg='red')
 
         elif table == 'tags':
-            # Similarly ensure Tag is imported and used
             tags = session.query(Tag).all()
+            click.secho('-' * 80, fg='cyan')
             for tag in tags:
                 click.echo(f"ID: {tag.id}, Tag: {tag.tag_name}")
+            click.secho('-' * 80, fg='cyan')
 
         elif table == 'complaints':
             complaints = session.query(Complaint).all()
+            click.secho('-' * 80, fg='cyan')
             for c in complaints:
                 click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
+            click.secho('-' * 80, fg='cyan')
 
         elif table == 'detailed_notes':
             notes = session.query(Note).all()
+            click.secho('-' * 80, fg='cyan')
             for note in notes:
                 user = session.query(User).filter(User.id == note.user_id).first()
                 tags = session.query(Tag).join(NoteTag, Tag.id == NoteTag.tag_id).filter(NoteTag.note_id == note.id).all()
@@ -101,7 +105,7 @@ def list_data(table):
                 click.echo(f"User: {user.username} ({user.email})")
                 click.echo(f"Tags: {tag_names}")
                 click.echo(f"Created: {note.created_at}, Updated: {note.updated_at}")
-
+            click.secho('-' * 80, fg='cyan')
         else:
             click.secho("Invalid table selected.", fg='red')
 
