@@ -80,17 +80,21 @@ def list_data(table):
 
         elif table == 'tags':
             tags = session.query(Tag).all()
-            click.secho('-' * 80, fg='cyan')
+            click.secho(f"{'ID':<5} {'Tag':<20}", fg='cyan', bold=True)  
+            click.secho('-' * 30, fg='cyan')  
             for tag in tags:
-                click.echo(f"ID: {tag.id}, Tag: {tag.tag_name}")
-            click.secho('-' * 80, fg='cyan')
+                click.secho(f"{tag.id:<5} {tag.tag_name:<20}", fg='white')  
+            click.secho('-' * 30, fg='cyan')
+            click.secho(f"Total tags: {len(tags)}", fg='green', bold=True)  
 
         elif table == 'complaints':
             complaints = session.query(Complaint).all()
+            click.secho(f"{'ID':<5} {'Tag':<20}", fg='cyan', bold=True) 
             click.secho('-' * 80, fg='cyan')
             for c in complaints:
                 click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
             click.secho('-' * 80, fg='cyan')
+            click.secho(f"Total tags: {len(tags)}", fg='green', bold=True)  
 
         elif table == 'detailed_notes':
             notes = session.query(Note).all()
