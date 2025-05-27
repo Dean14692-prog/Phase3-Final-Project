@@ -14,3 +14,4 @@ class User(Base):
 
     notes = relationship('Note', back_populates='user')
     complaints = relationship('Complaint', back_populates='user')
+
