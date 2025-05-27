@@ -1,2 +1,3 @@
 import click
-click.secho("Success!", fg="green", bold=True) 
+click.secho("Hey Dennis", fg = "green", bold = True)
+# click.echo("Hey Sam!")
