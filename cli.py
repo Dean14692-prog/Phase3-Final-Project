@@ -89,12 +89,18 @@ def list_data(table):
 
         elif table == 'complaints':
             complaints = session.query(Complaint).all()
-            click.secho(f"{'ID':<5} {'Tag':<20}", fg='cyan', bold=True) 
+            
+            # Print header with clear column titles and alignment
+            click.secho(f"{'ID':<5} {'User ID':<10} {'Complaint':<60}", fg='cyan', bold=True)
             click.secho('-' * 80, fg='cyan')
+            
             for c in complaints:
-                click.echo(f"ID: {c.id}, UserID: {c.user_id}, Content: {c.content}")
+                content_preview = (c.content[:57] + '...') if len(c.content) > 60 else c.content
+                click.echo(f"{c.id:<5} {c.user_id:<10} {content_preview:<60}")
+            
             click.secho('-' * 80, fg='cyan')
-            click.secho(f"Total tags: {len(tags)}", fg='green', bold=True)  
+            click.secho(f"Total complaints: {len(complaints)}", fg='green', bold=True)
+ 
 
         elif table == 'detailed_notes':
             notes = session.query(Note).all()
