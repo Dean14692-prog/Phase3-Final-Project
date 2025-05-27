@@ -46,4 +46,5 @@ class NoteTag(Base):
 
 class Complaint(Base):
     __tablename__ = 'complaint'
-    
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
