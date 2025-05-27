@@ -8,17 +8,17 @@ def cli():
     pass
 
 @cli.command('initialize')
-def init_db():
+def initialize_db():
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     click.echo("Database initialized.")
 
 @cli.command('update-db')
-def seed_db():
+def update_db():
     session = SessionLocal()
 
-    user1 = User(username='alice', email='martin.kioko@example.com', password_hash='alice_123', created_at=datetime.now())
-    user2 = User(username='bob', email='dennis.ngui@example.com', password_hash='hashed_pwd', created_at=datetime.now())
+    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password_hash='alice_123', created_at=datetime.now())
+    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password_hash='hashed_pwd', created_at=datetime.now())
     session.add_all([user1, user2])
     session.commit()
 
