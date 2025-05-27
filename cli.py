@@ -154,7 +154,7 @@ def update_data():
         return
 
     session.commit()
-    print(f"New entry added to {table} table!")
+    print(f"\nNew entry added to {table} table!")
     session.close()
   
 
