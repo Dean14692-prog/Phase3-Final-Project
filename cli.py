@@ -194,7 +194,64 @@ def delete_data():
     click.secho(f"\nRecord with ID {record_id} deleted from {table} successfully!", fg='green', bold=True)
     session.close()
 
+@cli.command('update-record')
+def update_record():
+    # """Update a record in the database"""
+    session = SessionLocal()
 
+    # Map table names to models
+    tables = {
+        'users': User,
+        'notes': Note,
+        'tags': Tag,
+        'complaints': Complaint,
+    }
+
+    # Ask for table name
+    table_name = input("Enter table name (users, notes, tags, complaints): ").strip().lower()
+
+    if table_name not in tables:
+        print("Invalid table name.")
+        session.close()
+        return
+
+    model = tables[table_name]
+
+    # Ask for record ID
+    try:
+        record_id = int(input("Enter record ID to update: "))
+    except ValueError:
+        print("Invalid ID. Please enter a number.")
+        session.close()
+        return
+
+    # Find the record
+    record = session.query(model).filter(model.id == record_id).first()
+
+    if not record:
+        print(f"No record found with ID {record_id}.")
+        session.close()
+        return
+
+    # Ask which field to update
+    field_name = input("Enter field name to update: ").strip()
+
+    # Check if the field exists
+    if not hasattr(record, field_name):
+        print(f"Field '{field_name}' not found in {table_name}.")
+        session.close()
+        return
+
+    # Ask for new value
+    new_value = input(f"Enter new value for {field_name}: ")
+
+    # Update the field
+    setattr(record, field_name, new_value)
+
+    # Save changes
+    session.commit()
+    print(f"Record with ID {record_id} updated successfully in {table_name} table.")
+    session.close()
 
 if __name__ == '__main__':
     cli()
