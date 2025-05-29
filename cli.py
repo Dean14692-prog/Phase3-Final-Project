@@ -163,7 +163,7 @@ def update_data():
 def delete_data():
     session = SessionLocal()
     table = input("Enter table name to delete from (users, notes, tags, complaints): ").strip().lower()
-    
+
     model = {
         'users': User,
         'notes': Note,
@@ -172,21 +172,20 @@ def delete_data():
     }
     
     if table not in model:
-        click.secho("Invalid table name", fg='red')
+        click.secho("\nInvalid table name", fg='red', bold = True)
         session.close()
         return
     
     try:
         record_id = int(input("Enter the ID of the record to delete: "))
     except ValueError:
-        click.secho("Invalid ID. Must be an integer.", fg='red')
+        click.secho("\nInvalid ID. Must be an integer.", fg='red' ,bold = True)
         session.close()
         return
-
     record = session.query(model[table]).filter(model[table].id == record_id).first()
     
     if not record:
-        click.secho(f"No record found in {table} with ID {record_id}", fg='red')
+        click.secho(f"\nNo record found in {table} with ID {record_id}", fg='red', bold = True)
         session.close()
         return
     
