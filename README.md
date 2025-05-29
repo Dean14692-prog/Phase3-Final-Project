@@ -21,7 +21,7 @@ This is a command-line interface (CLI) project for managing a simple database of
 
    ```bash
    git clone git@github.com:Dean14692-prog/Phase3-Final-Project.git
-
+   cd <your folder that you have cloned the project>
    ```
 
 2. Install dependencies
@@ -30,3 +30,29 @@ This is a command-line interface (CLI) project for managing a simple database of
    pip install sqlalchemy
 
    ```
+3. Ensure your database setup is correctly configured in `database.py` and models are defined in `models.py`.
+
+## Usage
+- Run the CLI tool by executing:
+```bash
+python cli.py [COMMAND]
+```
+- Replace [COMMAND] with the command name in the cli script file.
+
+## Commands
+1. initialize
+- Drops all existing tables and recreates them, effectively resetting the database.
+
+``` bash
+python cli.py initialize
+```
+2. seed-db
+- Populates the database with initial sample data including users, notes, tags, note-tag associations, and complaints.
+``` bash
+python cli.py seed-db
+```
+3. list-data
+- Displays all records from a selected table.
+``` bash
+python cli.py list-data
+```
