@@ -211,7 +211,7 @@ def update_record():
     table_name = input("Enter table name (users, notes, tags, complaints): ").strip().lower()
 
     if table_name not in tables:
-        print("Invalid table name.")
+        click.secho("Invalid table name.", fg = 'red', bold = True)
         session.close()
         return
 
@@ -221,7 +221,7 @@ def update_record():
     try:
         record_id = int(input("Enter record ID to update: "))
     except ValueError:
-        print("Invalid ID. Please enter a number.")
+        click.secho("Invalid ID.", fg = 'red', bold = True)
         session.close()
         return
 
@@ -229,7 +229,7 @@ def update_record():
     record = session.query(model).filter(model.id == record_id).first()
 
     if not record:
-        print(f"No record found with ID {record_id}.")
+        click.secho(f"No record found with ID {record_id}.", fg = 'red', bold = True)
         session.close()
         return
 
@@ -238,7 +238,7 @@ def update_record():
 
     # Check if the field exists
     if not hasattr(record, field_name):
-        print(f"Field '{field_name}' not found in {table_name}.")
+        click.secho(f"Field '{field_name}' not found in {table_name}.", fg = 'red', bold = True)
         session.close()
         return
 
