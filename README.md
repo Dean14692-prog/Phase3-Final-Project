@@ -56,3 +56,34 @@ python cli.py seed-db
 ``` bash
 python cli.py list-data
 ```
+-You will be prompted to choose one of the following tables: users, notes, tags, complaints.
+
+4. add-to-db
+- Interactively add a new record to any table.
+``` bash
+python cli.py add-to-db
+```
+- You will be prompted to specify the table and enter the necessary fields.
+
+5. delete-from-db
+- Interactively delete a record by specifying the table and record ID.
+``` bash
+python cli.py delete-from-db
+```
+6. update-record
+- Interactively update a specific field of a record by providing table name, record ID, field name, and new value.
+``` bash
+python cli.py update-record
+```
+## Models Overview
+
+- **User**: Stores user information (username, email, password, creation timestamp)
+- **Note**: Stores notes related to users (title, content, user_id, creation timestamp)
+- **Tag**: Stores tags that can be associated with notes
+- **NoteTag**: Many-to-many relationship table connecting notes and tags
+- **Complaint**: Stores complaints made by users
+
+## Dependencies
+
+- [Click](https://palletsprojects.com/p/click/) — for building the CLI interface
+- [SQLAlchemy](https://www.sqlalchemy.org/) — ORM for database operations
