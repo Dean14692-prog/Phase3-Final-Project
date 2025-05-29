@@ -164,14 +164,14 @@ def delete_data():
     session = SessionLocal()
     table = input("Enter table name to delete from (users, notes, tags, complaints): ").strip().lower()
     
-    model_map = {
+    model = {
         'users': User,
         'notes': Note,
         'tags': Tag,
         'complaints': Complaint,
     }
     
-    if table not in model_map:
+    if table not in model:
         click.secho("Invalid table name", fg='red')
         session.close()
         return
@@ -183,7 +183,7 @@ def delete_data():
         session.close()
         return
 
-    record = session.query(model_map[table]).filter(model_map[table].id == record_id).first()
+    record = session.query(model[table]).filter(model[table].id == record_id).first()
     
     if not record:
         click.secho(f"No record found in {table} with ID {record_id}", fg='red')
