@@ -24,8 +24,8 @@ This is a command-line interface (CLI) project for managing a simple database of
 
    ```
 
-2. Install dependencies (assuming you have Python and pip installed)
+2. Install dependencies
 
-   ```bash pip install click sqlalchemy
+   ```bash pip install sqlalchemy
 
    ```
