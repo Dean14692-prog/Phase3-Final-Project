@@ -18,5 +18,5 @@ This is a command-line interface (CLI) project for managing a simple database of
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:Dean14692-prog/Phase3-Final-Project.git
    cd <repository-folder>
