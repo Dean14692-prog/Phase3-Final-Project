@@ -26,6 +26,7 @@ This is a command-line interface (CLI) project for managing a simple database of
 
 2. Install dependencies
 
-   ```bash pip install sqlalchemy
+   ```bash
+   git clone git@github.com:Dean14692-prog/Phase3-Final-Project.git
 
    ```
