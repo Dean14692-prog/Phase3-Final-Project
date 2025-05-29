@@ -196,7 +196,7 @@ def delete_data():
 
 @cli.command('update-record')
 def update_record():
-    # """Update a record in the database"""
+  
     session = SessionLocal()
 
     # Map table names to models
@@ -211,46 +211,43 @@ def update_record():
     table_name = input("Enter table name (users, notes, tags, complaints): ").strip().lower()
 
     if table_name not in tables:
-        click.secho("Invalid table name.", fg = 'red', bold = True)
+        click.secho("\nInvalid table name.", fg = 'red', bold = True)
         session.close()
         return
 
-    model = tables[table_name]
+    # model = tables[table_name]
 
     # Ask for record ID
     try:
         record_id = int(input("Enter record ID to update: "))
     except ValueError:
-        click.secho("Invalid ID.", fg = 'red', bold = True)
+        click.secho("\nInvalid ID.", fg = 'red', bold = True)
         session.close()
         return
 
     # Find the record
-    record = session.query(model).filter(model.id == record_id).first()
+    record = session.query(tables[table_name]).filter(tables[table_name].id == record_id).first()
 
     if not record:
-        click.secho(f"No record found with ID {record_id}.", fg = 'red', bold = True)
+        click.secho(f"No record found with ID {record_id}.", fg='red', bold=True)
         session.close()
         return
 
     # Ask which field to update
     field_name = input("Enter field name to update: ").strip()
 
-    # Check if the field exists
     if not hasattr(record, field_name):
-        click.secho(f"Field '{field_name}' not found in {table_name}.", fg = 'red', bold = True)
+        click.secho(f"Field '{field_name}' not found in {table_name}.", fg= 'red', bold = True)
         session.close()
         return
 
-    # Ask for new value
     new_value = input(f"Enter new value for {field_name}: ")
 
-    # Update the field
     setattr(record, field_name, new_value)
 
-    # Save changes
+   
     session.commit()
-    print(f"Record with ID {record_id} updated successfully in {table_name} table.")
+    click.secho(f"Record with ID {record_id} updated successfully in {table_name} table.", fg='blue', bold = True)
     session.close()
 
 if __name__ == '__main__':
