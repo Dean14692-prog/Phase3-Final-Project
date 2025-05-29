@@ -14,7 +14,7 @@ def initialize_db():
     click.secho("\nDatabase initialized successfully!",fg="blue", bold=True)
 
 @cli.command('seed-db')
-def update_db():
+def seed_db():
     session = SessionLocal()
 
     user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password='martin_123', created_at=datetime.now())
@@ -55,7 +55,7 @@ def update_db():
 
 @cli.command('list-data')
 @click.option('--table', 
-              type=click.Choice(['users', 'notes', 'tags', 'complaints', 'detailed_notes']), 
+              type=click.Choice(['users', 'notes', 'tags', 'complaints']), 
               prompt='Which table to display?')
 def list_data(table):
     session = SessionLocal()
@@ -155,8 +155,47 @@ def update_data():
         return
 
     session.commit()
-    print(f"\nNew entry added to {table} table!")
+    click.secho(f"\nNew entry added to {table} table!", fg = 'blue', bold = True)
     session.close()
+
+
+@cli.command('delete-from-db')
+def delete_data():
+    session = SessionLocal()
+    table = input("Enter table name to delete from (users, notes, tags, complaints): ").strip().lower()
+    
+    model_map = {
+        'users': User,
+        'notes': Note,
+        'tags': Tag,
+        'complaints': Complaint,
+    }
+    
+    if table not in model_map:
+        click.secho("Invalid table name", fg='red')
+        session.close()
+        return
+    
+    try:
+        record_id = int(input("Enter the ID of the record to delete: "))
+    except ValueError:
+        click.secho("Invalid ID. Must be an integer.", fg='red')
+        session.close()
+        return
+
+    record = session.query(model_map[table]).filter(model_map[table].id == record_id).first()
+    
+    if not record:
+        click.secho(f"No record found in {table} with ID {record_id}", fg='red')
+        session.close()
+        return
+    
+    session.delete(record)
+    session.commit()
+    click.secho(f"\nRecord with ID {record_id} deleted from {table} successfully!", fg='green', bold=True)
+    session.close()
+
+
 
 if __name__ == '__main__':
     cli()
