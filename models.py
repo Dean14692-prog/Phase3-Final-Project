@@ -8,6 +8,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String)
+    tell = Column(Integer)
     email = Column(String)
     password = Column(String)
     created_at = Column(DateTime, default=datetime.now())
@@ -43,6 +44,7 @@ class Complaint(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
+    status = Column(String)
     created_at = Column(DateTime)
     user = relationship('User', back_populates='complaints')
 

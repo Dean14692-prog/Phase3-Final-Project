@@ -1,4 +1,5 @@
 import click
+import subprocess
 from database import engine, Base, SessionLocal
 from models import User, Note, Tag, NoteTag, Complaint
 from datetime import datetime
@@ -9,16 +10,19 @@ def cli():
 
 @cli.command('initialize')
 def initialize_db():
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
-    click.secho("\nDatabase initialized successfully!",fg="blue", bold=True)
+    result = subprocess.run(['alembic', 'upgrade', 'head'])
+    if result.returncode == 0:
+        click.secho("\nDatabase initialized successfully!", fg="blue", bold=True)
+    else:
+        click.secho("\nDatabase migration failed!", fg="red", bold=True)
+
 
 @cli.command('seed-db')
 def seed_db():
     session = SessionLocal()
 
-    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password='martin_123', created_at=datetime.now())
-    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password='dennis_123', created_at=datetime.now())
+    user1 = User(username='Martin Kioko', email='martin.kioko@example.com', password='martin_123', created_at=datetime.now(), tell='0796073063')
+    user2 = User(username='Dennis Ngui', email='dennis.ngui@example.com', password='dennis_123', created_at=datetime.now(), tell= '0711389955')
     session.add_all([user1, user2])
     session.commit()
 
@@ -185,13 +189,13 @@ def delete_data():
     record = session.query(model[table]).filter(model[table].id == record_id).first()
     
     if not record:
-        click.secho(f"\nNo record found in {table} with ID {record_id}", fg='red', bold = True)
+        click.secho(f"No record found in {table} with ID {record_id}", fg='red', bold = True)
         session.close()
         return
     
     session.delete(record)
     session.commit()
-    click.secho(f"\nRecord with ID {record_id} deleted from {table} successfully!", fg='green', bold=True)
+    click.secho(f"Record with ID {record_id} deleted from {table} successfully!", fg='green', bold=True)
     session.close()
 
 @cli.command('update-record')
@@ -249,6 +253,7 @@ def update_record():
     session.commit()
     click.secho(f"Record with ID {record_id} updated successfully in {table_name} table.", fg='blue', bold = True)
     session.close()
+
 
 if __name__ == '__main__':
     cli()
